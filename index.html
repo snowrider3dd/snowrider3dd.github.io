@@ -32,14 +32,39 @@
     
       gtag('config', 'G-FJ68LNS0CB');
     </script>
+    <script>
+      // Dark mode initialization - default to dark mode
+      if (!localStorage.getItem('theme')) {
+        localStorage.setItem('theme', 'dark');
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
 </head>
-<body class="bg-gray-50 text-gray-800 max-w-4xl mx-auto p-6">
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 max-w-4xl mx-auto p-6 transition-colors duration-200">
+    <!-- Dark/Light Mode Toggle -->
+    <div class="flex justify-end mb-4">
+        <button 
+            id="theme-toggle"
+            class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-100 px-4 py-2 rounded-lg font-semibold transition-colors flex items-center gap-2"
+            onclick="toggleTheme()">
+            <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+            <span id="theme-text" class="hidden sm:inline">Light Mode</span>
+        </button>
+    </div>
+    
     <main>
         <h1 class="text-4xl font-bold mb-4">Snow Rider 3D</h1>
         
         <div class="mb-8">
             <p class="text-lg mb-4">Snow Rider 3D is an adrenaline-pumping winter sports game that puts you on the most thrilling slopes. Carve through fresh powder, pull off incredible tricks, and race against time or friends in this ultimate snowboarding experience!</p>
-            <div class="w-full aspect-video mb-4 bg-gray-100 rounded-lg overflow-hidden">
+            <div class="w-full aspect-video mb-4 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
                 <iframe 
                     id="game-frame"
                     class="w-full h-full"
@@ -126,9 +151,35 @@
                         alert('Please allow pop-ups for this website to open the game in a new window.');
                     }
                 }
+
+                // Theme toggle functionality
+                function toggleTheme() {
+                    const html = document.documentElement;
+                    const themeText = document.getElementById('theme-text');
+                    
+                    if (html.classList.contains('dark')) {
+                        html.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                        themeText.textContent = 'Dark Mode';
+                    } else {
+                        html.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                        themeText.textContent = 'Light Mode';
+                    }
+                }
+
+                // Set initial theme text
+                window.addEventListener('DOMContentLoaded', function() {
+                    const themeText = document.getElementById('theme-text');
+                    if (document.documentElement.classList.contains('dark')) {
+                        themeText.textContent = 'Light Mode';
+                    } else {
+                        themeText.textContent = 'Dark Mode';
+                    }
+                });
             </script>
             
-            <div class="bg-blue-50 p-4 rounded-lg mb-8">
+            <div class="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg mb-8">
                 <h2 class="text-2xl font-bold mb-4">How to Play Snow Rider 3D</h2>
                 
                 <h3 class="text-xl font-semibold mb-2">Master the Slopes</h3>
@@ -138,7 +189,7 @@
                 <p class="mb-4">Take on time trials, freestyle challenges, or compete in tournament mode. Race against friends in split-screen multiplayer or challenge global leaderboards in solo mode.</p>
             </div>
 
-            <div class="bg-gray-50 p-4 rounded-lg mb-8">
+            <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg mb-8">
                 <h2 class="text-2xl font-bold mb-4">Features</h2>
                 <ul class="list-disc pl-6 space-y-2">
                     <li>Stunning 3D graphics with realistic snow physics</li>
@@ -150,7 +201,7 @@
                 </ul>
             </div>
 
-            <div class="bg-gray-100 p-4 rounded-lg mb-8">
+            <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-8">
                 <h2 class="text-2xl font-bold mb-4">Controls</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -161,10 +212,10 @@
                 </div>
             </div>
 
-            <div class="bg-blue-500 text-white p-6 rounded-lg text-center mb-8">
+            <div class="bg-blue-500 dark:bg-blue-700 text-white p-6 rounded-lg text-center mb-8">
                 <h2 class="text-2xl font-bold mb-2">Ready to Hit the Slopes?</h2>
                 <p class="mb-4">Experience the thrill of snowboarding right in your browser!</p>
-                <button class="bg-white text-blue-500 px-8 py-3 rounded-full font-bold hover:bg-blue-50 transition-colors" onclick="document.getElementById('game-frame').scrollIntoView({behavior: 'smooth', block: 'center'})">Play Now!</button>
+                <button class="bg-white dark:bg-gray-800 text-blue-500 dark:text-blue-400 px-8 py-3 rounded-full font-bold hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors" onclick="document.getElementById('game-frame').scrollIntoView({behavior: 'smooth', block: 'center'})">Play Now!</button>
             </div>
 
             <div class="space-y-4">
